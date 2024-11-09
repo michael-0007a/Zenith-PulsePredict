@@ -12,7 +12,7 @@ import joblib
 warnings.filterwarnings('ignore')
 
 # Importing and loading dataset
-dataset = pd.read_csv("heart.csv")
+dataset = pd.read_csv("heart disease dataset.csv")
 
 # Splitting dataset into predictors and target variable
 predictors = dataset.drop("target", axis=1)
