@@ -8,7 +8,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 app = Flask(__name__)
 app.secret_key = 'zxgfchvjbklnfchvg'  
 
-os.environ["GOOGLE_API_KEY"] = "AIzaSyAzM8A72SUVyqeGJ5o0rnV_Nt4dYX6ZUbM"  # Set this securely
+os.environ["GOOGLE_API_KEY"] = "API KEY"  # Set this securely
 
 llm = ChatGoogleGenerativeAI(
     model="gemini-1.5-flash", 
