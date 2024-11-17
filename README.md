@@ -66,21 +66,6 @@ This project consists of three components:
    
 2. Open a web browser and navigate to http://127.0.0.1:5000/.
 
-
-## File Structure
-
-|-- app.py               # Script for training and saving the Random Forest model
-|-- pred1.py             # Flask application for web interface and chatbot
-|-- test.py              # Script for testing and hyperparameter tuning
-|-- templates/           # HTML files for the web app
-    |-- home.html
-    |-- predict.html
-    |-- chatbot.html
-|-- static/              # CSS and JavaScript files
-|-- heart.csv            # Dataset used for training
-|-- heart_disease_rf_model.joblib  # Pre-trained Random Forest model
-
-
 ## Usage
 1. Navigate to the Prediction Page to input patient data and get a prediction.
 2. Use the Chatbot Page to ask cardiology-related queries based on the prediction or general health concerns.
