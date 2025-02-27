@@ -6,7 +6,7 @@ import pandas as pd
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 app = Flask(__name__)
-app.secret_key = 'zxgfchvjbklnfchvg'  
+app.secret_key = 'flask_secret_key'  
 
 os.environ["GOOGLE_API_KEY"] = "API KEY"  # Set this securely
 
