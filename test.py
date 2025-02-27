@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 # Load your dataset
 # Assuming `data` is your dataframe
 # For example:
-data = pd.read_csv('C:/Users/stora/OneDrive/Desktop/heart disease dataset.csv')  # Replace 'path_to_your_data.csv' with your dataset path
+data = pd.read_csv('heart disease dataset.csv')  # Replace 'path_to_your_data.csv' with your dataset path
 
 # Assuming the target column is 'target', and all other columns are features
 X = data.drop('target', axis=1)
