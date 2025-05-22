@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Prediction</title>
+    <!-- Add Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+            margin-bottom: 100px;
+            padding: 15px;
+        }
+        .container {
+            margin-top: 30px;
+            max-width: 100%;
+            padding: 15px;
+        }
+        .form-label {
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .btn-custom {
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .btn-custom:hover {
+            background-color: #45a049;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .container {
+                margin-top: 20px;
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .form-label {
+                font-size: 0.85rem;
+            }
+
+            input[type="number"] {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                margin-top: 15px;
+                padding: 8px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .form-label {
+                font-size: 0.8rem;
+            }
+
+            input[type="number"] {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Add this at the top of your existing styles */
+        .device-warning {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .device-warning-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 600px;
+        }
+
+        @media (max-width: 1039px) {
+            body > *:not(.device-warning) {
+                display: none !important;
+            }
+            
+            .device-warning {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="device-warning">
+        <div class="device-warning-content">
+            <h2>Screen Size Requirement</h2>
+            <p>For the best experience, please use a device with a screen width of 1040px or larger.</p>
+            <p>This application is optimized for larger screens to provide you with the most accurate and detailed heart health predictions.</p>
+            <p>Please switch to a desktop computer or larger device to continue.</p>
+        </div>
+    </div>
+    <div class="container">
+        <h1 class="text-center mb-4">Heart Disease Prediction</h1>
+        <form action="/predict" method="POST">
+            <div class="mb-3">
+                <label for="age" class="form-label">Age (in years):</label>
+                <input type="number" class="form-control" name="age" required>
+                <div class="invalid-feedback">
+                    Please provide a valid age.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="sex" class="form-label">Sex (1 = male, 0 = female):</label>
+                <input type="number" class="form-control" name="sex" min="0" max="1" required>
+                <div class="invalid-feedback">
+                    Please enter 1 for male or 0 for female.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="cp" class="form-label">Chest Pain Type (0 = typical angina, 1 = atypical angina, 2 = non-anginal pain, 3 = asymptomatic):</label>
+                <input type="number" class="form-control" name="cp" min="0" max="3" required>
+                <div class="invalid-feedback">
+                    Please enter a valid chest pain type (0-3).
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="trestbps" class="form-label">Resting Blood Pressure (in mm Hg):</label>
+                <input type="number" class="form-control" name="trestbps" required>
+                <div class="invalid-feedback">
+                    Please provide a valid resting blood pressure.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="chol" class="form-label">Serum Cholesterol (in mg/dl):</label>
+                <input type="number" class="form-control" name="chol" required>
+                <div class="invalid-feedback">
+                    Please provide a valid serum cholesterol value.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="fbs" class="form-label">Fasting Blood Sugar (1 = True, 0 = False):</label>
+                <input type="number" class="form-control" name="fbs" min="0" max="1" required>
+                <div class="invalid-feedback">
+                    Please enter 1 for True or 0 for False.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="restecg" class="form-label">Resting Electrocardiographic Results (0 = normal, 1 = having ST-T wave abnormality, 2 = showing left ventricular hypertrophy):</label>
+                <input type="number" class="form-control" name="restecg" min="0" max="2" required>
+                <div class="invalid-feedback">
+                    Please enter a valid ECG result (0-2).
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="thalach" class="form-label">Maximum Heart Rate Achieved:</label>
+                <input type="number" class="form-control" name="thalach" required>
+                <div class="invalid-feedback">
+                    Please provide a valid heart rate.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="exang" class="form-label">Exercise Induced Angina (1 = Yes, 0 = No):</label>
+                <input type="number" class="form-control" name="exang" min="0" max="1" required>
+                <div class="invalid-feedback">
+                    Please enter 1 for Yes or 0 for No.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="oldpeak" class="form-label">Depression Induced by Exercise Relative to Rest (in depression units):</label>
+                <input type="number" class="form-control" name="oldpeak" step="any" required>
+                <div class="invalid-feedback">
+                    Please provide a valid depression value.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="slope" class="form-label">Slope of the Peak Exercise ST Segment (0 = upsloping, 1 = flat, 2 = downsloping):</label>
+                <input type="number" class="form-control" name="slope" min="0" max="2" required>
+                <div class="invalid-feedback">
+                    Please enter a valid slope value (0-2).
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="ca" class="form-label">Number of Major Vessels Colored by Fluoroscopy (0-3):</label>
+                <input type="number" class="form-control" name="ca" min="0" max="3" required>
+                <div class="invalid-feedback">
+                    Please enter a valid value for the number of vessels.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="thal" class="form-label">Thalassemia (1 = normal, 2 = fixed defect, 3 = reversible defect):</label>
+                <input type="number" class="form-control" name="thal" min="1" max="3" required>
+                <div class="invalid-feedback">
+                    Please enter a valid thalassemia value (1-3).
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-custom btn-block">Predict Heart Disease</button>
+        </form>
+
+        {% if result %}
+            <h2 class="text-center mt-4">{{ result }}</h2>
+            <div class="text-center mt-3">
+                <a href="/chatbot" class="btn btn-custom">Chat with the bot</a>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Add Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Example of enabling Bootstrap form validation
+        (function () {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+</body>
+</html>
