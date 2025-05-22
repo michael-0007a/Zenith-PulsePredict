@@ -1,14 +1,14 @@
 import re
 from flask import Flask, render_template, request, session, redirect, url_for
 import os
-import joblib
 import pandas as pd
 from langchain_google_genai import ChatGoogleGenerativeAI
+from model_loader import load_model  # Import the new loader
 
 app = Flask(__name__)
 app.secret_key = 'flask_secret_key'  
 
-os.environ["GOOGLE_API_KEY"] = "Your KEY"  # Set this securely
+os.environ["GOOGLE_API_KEY"] = "AIzaSyAzM8A72SUVyqeGJ5o0rnV_Nt4dYX6ZUbM"
 
 llm = ChatGoogleGenerativeAI(
     model="gemini-1.5-flash", 
@@ -18,12 +18,8 @@ llm = ChatGoogleGenerativeAI(
     max_retries=2
 )
 
-
-def load_model():
-    clf = joblib.load('heart_disease_rf_model.joblib')
-    return clf
-
-clf = load_model()
+# Remove the global model loading
+# clf = load_model()  # Remove this line
 
 @app.route('/')
 def home():
@@ -33,6 +29,10 @@ def home():
 def predict():
     result = None  
     if request.method == 'POST':
+        # Load model only when needed
+        clf = load_model()  # Add this line
+        
+        # Get form data
         age = float(request.form['age'])
         sex = float(request.form['sex'])
         cp = float(request.form['cp'])
@@ -47,6 +47,7 @@ def predict():
         ca = float(request.form['ca'])
         thal = float(request.form['thal'])
 
+        # Create input_data DataFrame
         input_data = pd.DataFrame({
             'age': [age],
             'sex': [sex],
@@ -63,6 +64,7 @@ def predict():
             'thal': [thal]
         })
 
+        # Make prediction
         prediction = clf.predict(input_data)
         prediction_proba = clf.predict_proba(input_data)
 
