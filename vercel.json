@@ -2,18 +2,19 @@
   "version": 2,
   "builds": [
     {
-      "src": "app.py",
+      "src": "api/predict.py",
       "use": "@vercel/python",
-      "config": { 
-        "maxLambdaSize": "250mb",
-        "runtime": "python3.9"
+      "config": {
+        "maxLambdaSize": "500mb",
+        "runtime": "python3.9",
+        "buildCommand": "bash vercel_build.sh"
       }
     }
   ],
   "routes": [
     {
-      "src": "/(.*)",
-      "dest": "app.py"
+      "src": "/api/predict",
+      "dest": "api/predict.py"
     }
   ]
 }
