@@ -81,4 +81,4 @@ This project consists of three components:
 - Incorporate user authentication for saving reports.
 
 ## Author
-Developed by Michael Benedict (https://github.com/michael-0007a).  
+Developed by Michael Benedict (https://github.com/michael-0007a), Harsha RB
